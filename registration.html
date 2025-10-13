@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration - ICUMSAT 2025</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        .reg-section { background:#fff; padding:30px; border-radius:10px; box-shadow:0 0 20px rgba(0,0,0,0.08); }
+        .scan-result { margin-top:14px; color:#0033a0; font-weight:bold; word-break:break-all; }
+        .qr-wrapper { display:flex; align-items:center; gap:20px; flex-wrap:wrap; margin-top:15px; }
+        .qr-display { width:220px; height:220px; object-fit:contain; border-radius:14px; background:#fff; box-shadow:0 12px 30px rgba(0,0,0,0.12);
+            animation: qrPop 0.6s ease-out forwards, qrFloat 6s ease-in-out infinite; }
+        .qr-display:hover { transform: translateY(-4px) scale(1.02); box-shadow:0 18px 40px rgba(0,0,0,0.18); transition: transform .25s ease, box-shadow .25s ease; }
+        @keyframes qrPop { from { opacity:0; transform: scale(.9); filter: blur(2px);} to { opacity:1; transform: scale(1); filter: blur(0);} }
+        @keyframes qrFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-6px);} }
+        .qr-caption { color:#555; font-size:14px; }
+        .open-btn { display:inline-block; padding:10px 14px; background:#0033a0; color:#fff; border-radius:8px; font-weight:600; }
+        .open-btn:hover { background:#001e5e; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="Logo.jpg" alt="ICUMSAT Logo" class="logo">
+            <div class="conference-title">
+                <h1>ICUMSAT 2025</h1>
+                <p>INTERNATIONAL CONFERENCE ON ULTRASONICS AND MATERIALS SCIENCE<br>FOR ADVANCED TECHNOLOGY</p>
+            </div>
+        </div>
+        <div class="date-location">
+            <div class="partner-logos">
+                <img src="EEC Autonomous logo.jpg" alt="Easwari Engineering College Logo" class="partner-logo">
+                <img src="TRP.jpeg.jpg" alt="SRM TRP Engineering College Logo" class="partner-logo">
+            </div>
+            <img src="WhatsApp Image 2025-10-08 at 08.41.51_3f4909a4.jpg" alt="Conference Date" class="date-banner">
+        </div>
+    </header>
+
+    <nav>
+        <ul class="nav-menu">
+            <li><a href="index.html">HOME</a></li>
+            <li class="dropdown">
+                <a href="#">CONFERENCE <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-content">
+                    <li><a href="about.html">About</a></li>
+                    <li><a href="speakers.html">Speakers</a></li>
+                    <li><a href="program.html">Program</a></li>
+                </ul>
+            </li>
+            <li><a href="important-dates.html">IMPORTANT DATES</a></li>
+            <li class="dropdown">
+                <a href="#">COMMITTEES <i class="fas fa-chevron-down"></i></a>
+                <ul class="dropdown-content">
+                    <li><a href="organizing-committee.html">Organizing Committee</a></li>
+                    <li><a href="scientific-committee.html">Scientific Committee</a></li>
+                </ul>
+            </li>
+            <li><a href="fees.html">FEES</a></li>
+            <li><a href="registration.html" class="active">REGISTRATION</a></li>
+            <li><a href="sponsorship.html">SPONSORSHIP & EXHIBITION</a></li>
+            <li><a href="brochure.html">BROCHURE</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+        </ul>
+    </nav>
+
+    <main class="page-content">
+        <section class="reg-section page-enter">
+            <h2 class="animated-title">Registration</h2>
+            <p>Scan this QR</p>
+            <div class="qr-wrapper">
+                <img src="qr2.jpg" alt="QR Source" id="qrSource" class="qr-display" />
+                <div>
+                    <div class="scan-result" id="scanResult" style="font-size:18px;"></div>
+                    <div id="openBlock" style="margin-top:10px; display:none;">
+                        <a id="openLink" class="open-btn" target="_blank" rel="noopener">Open link</a>
+                        <div class="qr-caption">Click the QR image or button to open.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2025 ICUMSAT. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+    // Auto-decode local qr2.jpg and show only its contents
+    (async function(){
+        const resultEl = document.getElementById('scanResult');
+        const imgEl = document.getElementById('qrSource');
+        function showResult(text){
+            // If the QR contains a URL, show clickable button and make image clickable; else plain text
+            try {
+                const url = new URL(text);
+                resultEl.innerHTML = '<strong>Registration Link:</strong> '+url.toString();
+                const openBlock = document.getElementById('openBlock');
+                const openLink = document.getElementById('openLink');
+                openLink.href = url.toString();
+                openBlock.style.display = 'block';
+                imgEl.style.cursor = 'pointer';
+                imgEl.addEventListener('click', ()=> window.open(url.toString(), '_blank'));
+            } catch {
+                resultEl.textContent = text;
+            }
+        }
+
+        async function decodeWithDetector(bitmap){
+            if (!('BarcodeDetector' in window)) return null;
+            const detector = new BarcodeDetector({ formats: ['qr_code'] });
+            const codes = await detector.detect(bitmap);
+            if (codes && codes.length) return codes[0].rawValue || null;
+            return null;
+        }
+
+        try {
+            // Ensure the image is loaded then create a bitmap for detection
+            await imgEl.decode();
+            const bitmap = await createImageBitmap(imgEl);
+            let decoded = await decodeWithDetector(bitmap);
+            if (decoded) {
+                showResult(decoded);
+                return;
+            }
+            resultEl.textContent = 'Registration for ICUMSAT 2025';
+        } catch(e){
+            resultEl.textContent = 'Registration for ICUMSAT 2025';
+        }
+    })();
+    </script>
+</body>
+</html>
+
+
