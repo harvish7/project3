@@ -8,6 +8,18 @@
     margin-top: 20px;
 }
 
+body {
+    background-image: url("background.jpg"); /* your image file */
+    background-size: cover;      /* make it fill the screen */
+    background-position: center; /* center the image */
+    background-repeat: no-repeat; /* prevent tiling */
+    background-attachment: fixed; /* keep it fixed while scrolling */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+
 .stat-box {
     flex: 1;
     min-width: 200px;
