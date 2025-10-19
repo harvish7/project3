@@ -264,12 +264,12 @@ nav {
 
 .nav-menu li a:hover {
     background-color: #0033a0;
-    color: #fff;
+    color: #0729e8;
 }
 
 .nav-menu li a.active {
     background-color: #0033a0;
-    color: #fff;
+    color: #0729e8;
 }
 
 .dropdown-content {
