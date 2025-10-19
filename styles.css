@@ -290,7 +290,7 @@ nav {
 .dropdown-content a {
     padding: 14px 16px;
     text-align: left;
-    color: #fff !important;
+    color: #070fed !important;
     border-bottom: 1px solid #f0f0f0;
 }
 
@@ -302,7 +302,7 @@ nav {
 .dropdown-content a:focus,
 .dropdown-content a:active {
     background-color: #111 !important;
-    color: #fff !important;
+    color: #070fed !important;
 }
 
 .dropdown:hover .dropdown-content {
