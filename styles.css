@@ -9,7 +9,7 @@
 }
 
 body {
-    background-image: url("background.jpg"); /* your image file */
+    background-image: url("collage.webp"); /* your image file */
     background-size: cover;      /* make it fill the screen */
     background-position: center; /* center the image */
     background-repeat: no-repeat; /* prevent tiling */
