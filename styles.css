@@ -301,7 +301,7 @@ nav {
 .dropdown-content a:hover,
 .dropdown-content a:focus,
 .dropdown-content a:active {
-    background-color: #000 !important;
+    background-color: #111 !important;
     color: #fff !important;
 }
 
