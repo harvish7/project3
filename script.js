@@ -69,59 +69,103 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Hero slider autoplay
-    const slides = document.querySelectorAll('.hero-slider .slide');
-    const dots = document.querySelectorAll('.slider-dots .dot');
-    let current = 0;
-    const total = slides.length;
+    // Parallax hero interactions (scroll + mouse move)
+    const heroSection = document.querySelector('.parallax-hero');
+    const heroImages = heroSection ? Array.from(heroSection.querySelectorAll('.hero-image')) : [];
 
-    function showSlide(index) {
-        slides.forEach((s, i) => {
-            s.classList.toggle('active', i === index);
-        });
-        dots.forEach((d, i) => {
-            d.classList.toggle('active', i === index);
-        });
-        current = index;
-    }
+    if (heroSection && heroImages.length > 0) {
+        let targetY = 0;
+        let targetX = 0;
+        let currentY = 0;
+        let currentX = 0;
+        let animationFrameId = null;
+        let active = 0;
+        let rotateTimer = null;
 
-    function nextSlide() {
-        const next = (current + 1) % total;
-        showSlide(next);
-    }
+        /**
+         * Clamp helper to keep transforms within subtle bounds
+         */
+        const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
 
-    if (slides.length > 0) {
-        const intervalMs = 5000; // 5 seconds
-        let timer = setInterval(nextSlide, intervalMs);
+        /**
+         * Smoothly interpolate toward target offsets to avoid sudden jumps
+         */
+        const animate = () => {
+            currentY += (targetY - currentY) * 0.08;
+            currentX += (targetX - currentX) * 0.08;
 
-        // Allow manual navigation via dots
-        dots.forEach((dot, idx) => {
-            dot.addEventListener('click', () => {
-                showSlide(idx);
-                clearInterval(timer);
-                timer = setInterval(nextSlide, intervalMs);
+            // Apply transform to all layers with slight depth multipliers
+            heroImages.forEach(img => {
+                const depth = parseFloat(img.getAttribute('data-depth') || '1');
+                img.style.transform = `translate3d(calc(-50% + ${currentX * (depth - 0.9)}px), calc(-50% + ${currentY * (depth - 0.9)}px), 0) scale(1.02)`;
             });
-        });
 
-        // Resize slider to fill viewport below navbar
-        function sizeHero() {
-            const hero = document.querySelector('.hero-slider');
-            if (!hero) return;
-            // Compute the hero's top relative to the viewport and fill to bottom
-            const top = hero.getBoundingClientRect().top; // px from viewport top
-            const available = Math.max(300, Math.ceil(window.innerHeight - top));
-            hero.style.height = available + 'px';
-            document.querySelectorAll('.slide-img').forEach(img => {
-                img.style.height = available + 'px';
-            });
-        }
+            animationFrameId = requestAnimationFrame(animate);
+        };
 
-        // Ensure we size after image load to avoid gaps
-        sizeHero();
-        document.querySelectorAll('.slide-img').forEach(img => {
-            if (img.complete) return;
-            img.addEventListener('load', sizeHero);
+        /**
+         * Update vertical parallax based on scroll depth relative to hero
+         */
+        const handleScroll = () => {
+            const rect = heroSection.getBoundingClientRect();
+            const viewportHeight = window.innerHeight || document.documentElement.clientHeight;
+            const sectionCenter = rect.top + rect.height / 2;
+            const viewportCenter = viewportHeight / 2;
+            const delta = viewportCenter - sectionCenter;
+
+            targetY = clamp(delta * 0.04, -40, 40);
+        };
+
+        /**
+         * Update subtle horizontal parallax based on pointer position
+         */
+        const handleMouseMove = (event) => {
+            const bounds = heroSection.getBoundingClientRect();
+            const relativeX = (event.clientX - bounds.left) / bounds.width - 0.5;
+            targetX = clamp(relativeX * 30, -30, 30);
+        };
+
+        /**
+         * Reset horizontal motion when pointer leaves the hero
+         */
+        const resetMouse = () => {
+            targetX = 0;
+        };
+
+        window.addEventListener('scroll', handleScroll, { passive: true });
+        window.addEventListener('resize', handleScroll);
+        heroSection.addEventListener('mousemove', handleMouseMove);
+        heroSection.addEventListener('mouseleave', resetMouse);
+
+        handleScroll();
+        animate();
+
+        // Initialize first image visible
+        heroImages.forEach((img, i) => img.classList.toggle('is-active', i === 0));
+
+        // Crossfade between hero images every 3 seconds
+        const rotate = () => {
+            const prev = active;
+            active = (active + 1) % heroImages.length;
+            heroImages[prev].classList.remove('is-active');
+            heroImages[active].classList.add('is-active');
+        };
+
+        rotateTimer = setInterval(rotate, 3000);
+
+        // Ensure animation frame is canceled if the page is hidden/unloaded
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && animationFrameId) {
+                cancelAnimationFrame(animationFrameId);
+                animationFrameId = null;
+                if (rotateTimer) {
+                    clearInterval(rotateTimer);
+                    rotateTimer = null;
+                }
+            } else if (!document.hidden && !animationFrameId) {
+                animationFrameId = requestAnimationFrame(animate);
+                if (!rotateTimer) rotateTimer = setInterval(rotate, 3000);
+            }
         });
-        window.addEventListener('resize', sizeHero);
     }
 });
