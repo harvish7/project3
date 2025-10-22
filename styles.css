@@ -8,18 +8,6 @@
     margin-top: 20px;
 }
 
-body {
-    background-image: url("collage.webp"); /* your image file */
-    background-size: cover;      /* make it fill the screen */
-    background-position: center; /* center the image */
-    background-repeat: no-repeat; /* prevent tiling */
-    background-attachment: fixed; /* keep it fixed while scrolling */
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-
 .stat-box {
     flex: 1;
     min-width: 200px;
@@ -246,41 +234,54 @@ nav {
 .nav-menu {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     padding: 0;
 }
 
 .nav-menu li {
     position: relative;
+    white-space: nowrap;
 }
 
 .nav-menu li a {
     display: block;
-    padding: 15px 20px;
+    padding: 15px 12px;
     color: #0033a0;
     font-weight: bold;
-    transition: all 0.3s ease;
+    font-size: 13px;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: visible;
 }
 
-.nav-menu li a:hover {
-    background-color: #0033a0;
-    color: #0729e8;
+/* Pseudo element for underline animation - needs overflow hidden on parent */
+.nav-menu li a::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 100%;
+    overflow: hidden;
+    pointer-events: none;
 }
 
-.nav-menu li a.active {
-    background-color: #0033a0;
-    color: #0729e8;
+.dropdown {
+    position: relative;
 }
 
 .dropdown-content {
     display: none;
     position: absolute;
-    background-color: #070ee8;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
     min-width: 200px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.3);
-    z-index: 1000;
+    z-index: 9999;
     border: 1px solid #ddd;
     border-radius: 4px;
+    margin-top: 0;
 }
 
 .dropdown-content li {
@@ -292,6 +293,11 @@ nav {
     text-align: left;
     color: #111 !important;
     border-bottom: 1px solid #f0f0f0;
+    background: none !important;
+    transform: none !important;
+    box-shadow: none !important;
+    animation: none !important;
+    font-size: 14px !important;
 }
 
 .dropdown-content a:last-child {
@@ -301,12 +307,19 @@ nav {
 .dropdown-content a:hover,
 .dropdown-content a:focus,
 .dropdown-content a:active {
-    background-color: #111 !important;
-    color: #070fed !important;
+    background-color: #0033a0 !important;
+    color: #fff !important;
+    transform: none !important;
+}
+
+.dropdown-content a::before {
+    display: none !important;
 }
 
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
 /* Page Content Styles */
 
 /* Contact Section Styles */
@@ -346,7 +359,7 @@ nav {
     border-bottom: none;
     padding-bottom: 10px;
     position: relative;
-    animation: fadeIn 1s ease-in-out;
+    animation: fadeIn 1s ease-in-out forwards;
 }
 
 .contact-section h2.animated-title:after {
@@ -623,10 +636,6 @@ nav {
     0% { opacity: 0; transform: translateY(20px) scale(0.98); filter: brightness(0.98); }
     100% { opacity: 1; transform: translateY(0) scale(1); filter: brightness(1); }
 }
-    transition: width 0.8s ease;
-    transform: translateX(-50%);
-    animation: expand-line 2s infinite alternate;
-}
 
 @keyframes expand-line {
     0% { width: 0; }
@@ -654,7 +663,7 @@ nav {
 }
 
 .contact-card.animated {
-    animation: fadeIn 1s ease-in-out;
+    animation: fadeIn 1s ease-in-out forwards;
 }
 
 @keyframes fadeIn {
@@ -911,7 +920,7 @@ nav {
 }
 
 .about-section.animated {
-    animation: fadeIn 1s ease-in-out;
+    animation: fadeIn 1s ease-in-out forwards;
 }
 
 .about-section h2 {
@@ -1394,7 +1403,6 @@ footer {
         border-right: none;
         border-left: 4px solid #0033a0;
     }
-}   clear: both;
 }
 
 .nav-menu {
@@ -1410,37 +1418,6 @@ footer {
     position: relative;
 }
 
-.nav-menu li a {
-    display: block;
-    padding: 10px 15px;
-    color: #444;
-    font-weight: 500;
-    font-size: 12px;
-    transition: color 0.3s;
-}
-
-.nav-menu li a:hover {
-    color: #0056b3;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #fff;
-    min-width: 180px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1;
-}
-
-.dropdown-content li a {
-    padding: 8px 15px;
-    color: #454;
-    font-size: 11px;
-}
-
-.dropdown:hover .dropdown-content {
-    display: block;
-}
 
 /* Image Gallery Styles */
 .image-gallery {
@@ -1634,24 +1611,24 @@ footer {
     }
 }
 
-/* === Nav color overrides for better visibility === */
-.nav-menu li a {
-    color: #111 !important; /* default text black */
+/* === Nav animations === */
+/* Gradient background animation on hover/active - NOT for dropdown items */
+.nav-menu > li > a:hover,
+.nav-menu > li > a:focus,
+.nav-menu > li > a:active,
+.nav-menu > li > a.active {
+    background: linear-gradient(135deg, #0033a0 0%, #00a0e9 50%, #0033a0 100%);
+    background-size: 200% 200%;
+    color: #fff !important;
+    box-shadow: 0 4px 15px rgba(0, 51, 160, 0.3);
+    animation: gradientShift 3s ease infinite;
 }
 
-.nav-menu li a:hover,
-.nav-menu li a:focus,
-.nav-menu li a:active,
-.nav-menu li a.active {
-    background-color: #000 !important; /* dark background on interaction */
-    color: #fff !important;            /* white text for contrast */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
-
-/* Dropdown links */
-.dropdown-content a {
-    color: #111 !important;
-}
-.dropdown-content a:hover,
 
 /* Brochure Page Styles */
 .brochure-section {
@@ -1740,9 +1717,4 @@ footer {
     .pdf-preview {
         flex: 2;
     }
-}
-.dropdown-content a:focus,
-.dropdown-content a:active {
-    background-color: #000 !important;
-    color: #fff !important;
 }
