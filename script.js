@@ -1,17 +1,5 @@
 // Wait for the DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
-    // Mobile navigation toggle
-    const navMenu = document.querySelector('.nav-menu');
-    const mobileMenuToggle = document.createElement('div');
-    mobileMenuToggle.className = 'mobile-menu-toggle';
-    mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-    
-    document.querySelector('nav').insertBefore(mobileMenuToggle, navMenu);
-    
-    mobileMenuToggle.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-    });
-    
     // Handle dropdown menus on mobile
     const dropdowns = document.querySelectorAll('.dropdown');
     
