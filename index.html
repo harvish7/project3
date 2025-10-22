@@ -10,7 +10,9 @@
 <body>
     <header>
         <div class="logo-container">
-            <img src="Logo.jpg" alt="ICUMSAT Logo" class="logo">
+            <a href="http://www.ultrasonicsindia.org/" target="_blank" rel="noopener">
+                <img src="Logo.jpg" alt="ICUMSAT Logo" class="logo">
+            </a>
             <div class="conference-title">
                 <h1>ICUMSAT 2025</h1>
                 <p>INTERNATIONAL CONFERENCE ON ULTRASONICS AND<br>MATERIALS SCIENCE FOR ADVANCED TECHNOLOGY</p>
@@ -18,10 +20,17 @@
         </div>
         <div class="date-location">
             <div class="partner-logos">
-                <img src="Transparent logo.png" alt="Easwari Engineering College Logo" class="partner-logo">
-                <img src="TRP.jpeg.jpg" alt="SRM TRP Engineering College Logo" class="partner-logo">
+                <a href="https://srmeaswari.ac.in/" target="_blank" rel="noopener">
+                    <img src="Transparent logo.png" alt="Easwari Engineering College Logo" class="partner-logo">
+                </a>
+                <a href="https://trp.srmtrichy.edu.in/" target="_blank" rel="noopener">
+                    <img src="TRP.jpeg.jpg" alt="SRM TRP Engineering College Logo" class="partner-logo">
+                </a>
             </div>
-            <img src="WhatsApp Image 2025-10-08 at 08.41.51_3f4909a4.jpg" alt="Conference Date" class="date-banner">
+            <div class="date-banner">
+                21<sup>st</sup> to 23<sup>rd</sup> January 2026<br>
+                <span class="location">Chennai, INDIA</span>
+            </div>
         </div>
     </header>
 
@@ -44,36 +53,304 @@
             <li><a href="contact.html">CONTACT</a></li>
         </ul>
     </nav>
-    <section class="hero-slider" aria-label="Homepage Image Slider">
-        <div class="slides">
-            <div class="slide active" id="slide-1">
-                <img src="image5.jpg" alt="Homepage visual" class="slide-img">
-            </div>
+    <!--
+        Parallax hero inspired by ICU 2025 homepage
+        Combines scroll-based and mouse-based parallax for depth
+    -->
+    <section class="parallax-hero" aria-label="ICUMSAT Highlight">
+        <div class="hero-media" aria-hidden="true">
+            <img src="image5.jpg" alt="Ultrasonics research visualization" class="hero-image" data-depth="1">
+            <img src="image6.jpg" alt="Acoustic sensors array" class="hero-image" data-depth="1.08">
+            <img src="image7.jpg" alt="Advanced materials microscopy" class="hero-image" data-depth="1.16">
+            <img src="image8.jpg" alt="Conference collaboration" class="hero-image" data-depth="1.24">
         </div>
-        <div class="slider-dots" role="tablist" aria-label="Slider pagination">
-            <button class="dot active" aria-label="Go to slide 1" aria-controls="slide-1"></button>
-        </div>
-    </section>
-
-    <section class="animated-stats">
-        <div class="stat-box">
-            <div class="stat-number">3000+</div>
-            <div class="stat-label">Visitors</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-number">1500+</div>
-            <div class="stat-label">Delegates</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-number">80+</div>
-            <div class="stat-label">Exhibitors</div>
-        </div>
-        <div class="stat-box">
-            <div class="stat-number">150+</div>
-            <div class="stat-label">Keynote Speakers</div>
+        <div class="hero-overlay">
+            <p class="hero-kicker">International Conference • 21<sup>st</sup> – 23<sup>rd</sup> January 2026</p>
+            <h1 class="hero-title">Advancing Ultrasonics & Materials Science</h1>
+            <p class="hero-tagline">Join global experts at ICUMSAT 2025 for breakthrough insights, collaborative research, and transformative technology showcases.</p>
+            <a href="registration.html" class="hero-cta">Reserve Your Seat</a>
         </div>
     </section>
 
+    <!-- Sponsor marquee section replicating smooth sliding logos -->
+    <section class="sponsor-marquee" aria-label="Conference Sponsors">
+        <div class="marquee-track" role="list">
+            <div class="logo-item" role="listitem" aria-label="Visiting delegates"><span>3000+ Visitors</span></div>
+            <div class="logo-item" role="listitem" aria-label="Conference delegates"><span>1500+ Delegates</span></div>
+            <div class="logo-item" role="listitem" aria-label="Exhibiting partners"><span>80+ Exhibitors</span></div>
+            <div class="logo-item" role="listitem" aria-label="Keynote speakers"><span>150+ Keynote Speakers</span></div>
+            <div class="logo-item" role="listitem" aria-label="Workshops"><span>20+ Workshops</span></div>
+            <div class="logo-item" role="listitem" aria-label="Research papers"><span>200+ Papers</span></div>
+            <div class="logo-item" role="listitem" aria-label="Countries represented"><span>30+ Countries</span></div>
+            <div class="logo-item" role="listitem" aria-label="Innovation showcases"><span>50+ Innovations</span></div>
+        </div>
+    </section>
+
+    <!-- Inline styles scoped to homepage hero and stats marquee -->
+    <style>
+        /* === Parallax Hero Styles === */
+        /* Root hero container handles sizing, centering, and establishes 3D perspective */
+        .parallax-hero {
+            position: relative;
+            height: min(90vh, 860px);
+            min-height: 520px;
+            width: 100%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #040f36;
+            perspective: 1200px;
+            margin-bottom: 0;
+        }
+
+        /* Image wrapper sits behind overlay text and is transformed on scroll/mouse */
+        .hero-media {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            will-change: transform;
+        }
+
+        /* Actual background image scaled slightly larger to avoid gaps during motion */
+        .hero-image {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 120%;
+            height: 120%;
+            object-fit: cover;
+            transform: translate3d(-50%, -50%, 0) scale(1.02);
+            transition: transform 0.35s ease, opacity 1s ease;
+            filter: brightness(0.85) saturate(1.1);
+            opacity: 0;               /* hidden by default for crossfade */
+            pointer-events: none;     /* ignore pointer for images */
+        }
+
+        /* Visible hero image layer */
+        .hero-image.is-active {
+            opacity: 1;
+            z-index: 1;
+        }
+
+        /* Text overlay sits above imagery and remains fixed while image moves */
+        .hero-overlay {
+            position: relative;
+            z-index: 2;
+            max-width: min(900px, 90vw);
+            text-align: center;
+            color: #ffffff;
+            padding: 0 24px;
+        }
+
+        /* Decorative prefix line describing the event timing */
+        .hero-kicker {
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.25rem;
+            margin-bottom: 18px;
+            color: rgba(255, 255, 255, 0.75);
+        }
+
+        /* Primary headline mirroring ICU 2025 styling cues */
+        .hero-title {
+            font-size: clamp(2.8rem, 5vw, 4.8rem);
+            line-height: 1.1;
+            margin-bottom: 22px;
+            text-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
+        }
+
+        /* Supporting copy explains conference value proposition */
+        .hero-tagline {
+            font-size: clamp(1rem, 2vw, 1.35rem);
+            line-height: 1.6;
+            margin: 0 auto 34px;
+            max-width: 720px;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Call-to-action button leveraging conference brand colors */
+        .hero-cta {
+            display: inline-block;
+            padding: 14px 36px;
+            background: linear-gradient(135deg, #00a0e9, #0033a0);
+            color: #ffffff;
+            border-radius: 32px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+            box-shadow: 0 18px 40px rgba(0, 160, 233, 0.35);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .hero-cta:hover,
+        .hero-cta:focus {
+            transform: translateY(-3px);
+            box-shadow: 0 22px 46px rgba(0, 160, 233, 0.45);
+        }
+
+        /* Responsive adjustments ensure readable spacing on tablets */
+        @media (max-width: 768px) {
+            .parallax-hero {
+                min-height: 460px;
+            }
+
+            .hero-overlay {
+                padding: 0 18px;
+            }
+
+            .hero-kicker {
+                letter-spacing: 0.18rem;
+            }
+        }
+
+        /* Compact layout for smaller phones */
+        @media (max-width: 480px) {
+            .parallax-hero {
+                min-height: 420px;
+            }
+
+            .hero-cta {
+                padding: 12px 28px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* === Stats Marquee Styles === */
+        /* Container ensures component has white background and spacing */
+        .sponsor-marquee {
+            --marquee-duration: 25s;
+            background: #ffffff;
+            padding: 28px 0;
+            margin: 56px 0;
+            overflow: hidden;
+            border-radius: 0;
+            box-shadow: 0 12px 32px rgba(0, 51, 160, 0.08);
+            width: 100%;
+        }
+
+        /* Track holds the stat boxes and animates horizontally */
+        .marquee-track {
+            display: flex;
+            gap: 40px;
+            width: max-content;
+            animation: marquee-slide var(--marquee-duration) linear infinite;
+        }
+
+        /* Pause animation when the user hovers over the component */
+        .sponsor-marquee:hover .marquee-track {
+            animation-play-state: paused;
+        }
+
+        /* Individual stat cards styled as rounded cards */
+        .logo-item {
+            flex: 0 0 190px;
+            height: 110px;
+            background: #ffffff; /* default, overridden below */
+            border-radius: 14px;
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0b2266;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 0 16px;
+            border: 2px solid rgba(0,0,0,0.05);
+        }
+
+        .logo-item span {
+            display: inline-block;
+            padding: 0 12px;
+            text-align: center;
+        }
+
+        /* Color cycle across boxes for visual variety */
+        .logo-item:nth-child(8n + 1) {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.12), rgba(255, 107, 107, 0.22));
+            border-color: rgba(255, 107, 107, 0.35);
+        }
+        .logo-item:nth-child(8n + 2) {
+            background: linear-gradient(135deg, rgba(255, 209, 102, 0.12), rgba(255, 209, 102, 0.22));
+            border-color: rgba(255, 209, 102, 0.35);
+        }
+        .logo-item:nth-child(8n + 3) {
+            background: linear-gradient(135deg, rgba(6, 214, 160, 0.12), rgba(6, 214, 160, 0.22));
+            border-color: rgba(6, 214, 160, 0.35);
+        }
+        .logo-item:nth-child(8n + 4) {
+            background: linear-gradient(135deg, rgba(78, 205, 196, 0.12), rgba(78, 205, 196, 0.22));
+            border-color: rgba(78, 205, 196, 0.35);
+        }
+        .logo-item:nth-child(8n + 5) {
+            background: linear-gradient(135deg, rgba(31, 162, 255, 0.12), rgba(31, 162, 255, 0.22));
+            border-color: rgba(31, 162, 255, 0.35);
+        }
+        .logo-item:nth-child(8n + 6) {
+            background: linear-gradient(135deg, rgba(199, 125, 255, 0.12), rgba(199, 125, 255, 0.22));
+            border-color: rgba(199, 125, 255, 0.35);
+        }
+        .logo-item:nth-child(8n + 7) {
+            background: linear-gradient(135deg, rgba(255, 143, 171, 0.12), rgba(255, 143, 171, 0.22));
+            border-color: rgba(255, 143, 171, 0.35);
+        }
+        .logo-item:nth-child(8n) {
+            background: linear-gradient(135deg, rgba(144, 202, 249, 0.12), rgba(144, 202, 249, 0.22));
+            border-color: rgba(144, 202, 249, 0.35);
+        }
+
+        /* Keyframes translate the entire track for marquee effect */
+        @keyframes marquee-slide {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        /* Responsive adjustments for smaller viewports */
+        @media (max-width: 768px) {
+            .logo-item {
+                flex: 0 0 160px;
+                height: 95px;
+                font-size: 14px;
+            }
+
+            .sponsor-marquee {
+                margin: 32px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo-item {
+                flex: 0 0 140px;
+                height: 80px;
+                font-size: 12px;
+            }
+        }
+    </style>
+
+
+    <script>
+        // Duplicate marquee items to create seamless infinite scroll
+        (function () {
+            const marquee = document.querySelector('.sponsor-marquee');
+            if (!marquee) return;
+
+            const track = marquee.querySelector('.marquee-track');
+            if (!track) return;
+
+            // Duplicate all stat cards to ensure seamless looping
+            const items = Array.from(track.children);
+            items.forEach((item) => {
+                const clone = item.cloneNode(true);
+                clone.setAttribute('aria-hidden', 'true');
+                track.appendChild(clone);
+            });
+        })();
+    </script>
     <script src="script.js"></script>
 </body>
 </html>
