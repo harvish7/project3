@@ -29,7 +29,7 @@
 }
 
 .stat-box:nth-child(2) {
-    background: linear-gradient(135deg, #13547a 0%, #80d0c7 100%);
+    background: linear-gradient(135deg, #0f5c89 0%, #80d0c7 100%);
     animation-delay: 0.3s;
 }
 
@@ -164,9 +164,28 @@ header {
 }
 
 .date-banner {
-    max-width: 100%;
-    height: auto;
-    max-height: 80px;
+    background-color: #0033a0;
+    color: #ffffff;
+    font-weight: bold;
+    text-align: center;
+    padding: 12px 25px;
+    border-radius: 4px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    display: inline-block;
+}
+
+.date-banner sup {
+    font-size: 12px;
+    vertical-align: super;
+}
+
+.date-banner .location {
+    color: #ffcc00;
+    font-weight: bold;
+    font-size: 22px;
+    display: block;
+    margin-top: 3px;
 }
 
 /* Hero Slider */
@@ -1716,5 +1735,187 @@ footer {
     
     .pdf-preview {
         flex: 2;
+    }
+}
+
+.sponsorship-section {
+    background: linear-gradient(135deg, rgba(0, 51, 160, 0.08), rgba(0, 160, 233, 0.08));
+    padding: 40px 24px;
+    border-radius: 18px;
+    box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    position: relative;
+}
+
+.sponsorship-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% 20%, rgba(0, 51, 160, 0.15), transparent 60%),
+                radial-gradient(circle at 70% 10%, rgba(0, 160, 233, 0.15), transparent 55%);
+    pointer-events: none;
+    animation: sponsorshipGlow 6s ease-in-out infinite alternate;
+}
+
+.sponsorship-section > * {
+    position: relative;
+}
+
+.sponsorship-tiers {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 24px;
+    margin-top: 32px;
+}
+
+.tier-card {
+    background: white;
+    border-radius: 16px;
+    padding: 26px 24px;
+    box-shadow: 0 14px 32px rgba(0, 51, 160, 0.12);
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    opacity: 0;
+    transform: translateY(18px);
+    animation: tierReveal 0.8s ease forwards;
+}
+
+.tier-card:nth-child(1) {
+    animation-delay: 0.1s;
+}
+
+.tier-card:nth-child(2) {
+    animation-delay: 0.25s;
+}
+
+.tier-card:nth-child(3) {
+    animation-delay: 0.4s;
+}
+
+.tier-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 44px rgba(0, 51, 160, 0.2);
+}
+
+.tier-card h3 {
+    font-size: 22px;
+    color: #0033a0;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.tier-card ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 10px;
+}
+
+.tier-card li {
+    padding-left: 24px;
+    position: relative;
+    color: #333;
+}
+
+.tier-card li::before {
+    content: '\2713';
+    position: absolute;
+    left: 0;
+    top: 2px;
+    color: #00a0e9;
+    font-weight: bold;
+}
+
+.exhibition-details {
+    margin-top: 40px;
+    background: white;
+    border-radius: 16px;
+    padding: 28px 24px;
+    box-shadow: 0 16px 36px rgba(0, 51, 160, 0.12);
+    animation: detailReveal 0.9s ease forwards;
+    opacity: 0;
+    transform: translateY(24px);
+}
+
+.exhibition-details ul {
+    margin: 18px 0 0;
+    padding-left: 20px;
+    color: #333;
+    display: grid;
+    gap: 10px;
+}
+
+.contact-block {
+    margin-top: 36px;
+    background: linear-gradient(135deg, rgba(0, 51, 160, 0.85), rgba(0, 160, 233, 0.85));
+    color: #fff;
+    border-radius: 18px;
+    padding: 30px 26px;
+    box-shadow: 0 20px 44px rgba(0, 51, 160, 0.25);
+    position: relative;
+    overflow: hidden;
+    animation: contactReveal 1s ease forwards;
+    opacity: 0;
+    transform: translateY(26px);
+}
+
+.contact-block::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.4), transparent 50%);
+    opacity: 0;
+    animation: contactPulse 4s ease-in-out infinite;
+}
+
+.contact-block a {
+    color: #ffe680;
+    font-weight: 600;
+}
+
+.contact-block p {
+    position: relative;
+}
+
+@keyframes sponsorshipGlow {
+    from {
+        opacity: 0.45;
+    }
+    to {
+        opacity: 0.8;
+    }
+}
+
+@keyframes tierReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes detailReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes contactReveal {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes contactPulse {
+    0%, 100% {
+        opacity: 0.35;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: scale(1.05);
     }
 }
