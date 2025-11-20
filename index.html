@@ -59,16 +59,10 @@
     -->
     <section class="parallax-hero" aria-label="ICUMSAT Highlight">
         <div class="hero-media" aria-hidden="true">
-            <img src="image5.jpg" alt="Ultrasonics research visualization" class="hero-image" data-depth="1">
+            <img src="image4.jpg" alt="Ultrasonics research visualization" class="hero-image" data-depth="1">
             <img src="image6.jpg" alt="Acoustic sensors array" class="hero-image" data-depth="1.08">
             <img src="image7.jpg" alt="Advanced materials microscopy" class="hero-image" data-depth="1.16">
             <img src="image8.jpg" alt="Conference collaboration" class="hero-image" data-depth="1.24">
-        </div>
-        <div class="hero-overlay">
-            <p class="hero-kicker">International Conference • 21<sup>st</sup> – 23<sup>rd</sup> January 2026</p>
-            <h1 class="hero-title">Advancing Ultrasonics & Materials Science</h1>
-            <p class="hero-tagline">Join global experts at ICUMSAT 2025 for breakthrough insights, collaborative research, and transformative technology showcases.</p>
-            <a href="registration.html" class="hero-cta">Reserve Your Seat</a>
         </div>
     </section>
 
@@ -92,16 +86,31 @@
         /* Root hero container handles sizing, centering, and establishes 3D perspective */
         .parallax-hero {
             position: relative;
-            height: min(90vh, 860px);
-            min-height: 520px;
+            background-image: url('image4.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             width: 100%;
-            overflow: hidden;
+            height: 100vh;
+            min-height: 520px;
             display: flex;
             align-items: center;
             justify-content: center;
-            background: #040f36;
-            perspective: 1200px;
+            text-align: center;
+            color: white;
             margin-bottom: 0;
+        }
+
+        /* Dark overlay for better text readability */
+        .parallax-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.15);
+            z-index: 1;
         }
 
         /* Image wrapper sits behind overlay text and is transformed on scroll/mouse */
@@ -110,6 +119,7 @@
             inset: 0;
             overflow: hidden;
             will-change: transform;
+            display: none; /* Hide to use background-image instead */
         }
 
         /* Actual background image scaled slightly larger to avoid gaps during motion */
@@ -192,7 +202,9 @@
         /* Responsive adjustments ensure readable spacing on tablets */
         @media (max-width: 768px) {
             .parallax-hero {
+                height: 70vh;
                 min-height: 460px;
+                background-position: center center;
             }
 
             .hero-overlay {
@@ -207,7 +219,9 @@
         /* Compact layout for smaller phones */
         @media (max-width: 480px) {
             .parallax-hero {
+                height: 60vh;
                 min-height: 420px;
+                background-position: center center;
             }
 
             .hero-cta {
@@ -351,6 +365,54 @@
             });
         })();
     </script>
+    <style>
+        /* Overrides for static hero image */
+        .parallax-hero {
+            height: auto;
+            min-height: 0;
+            background-image: none;
+            display: block;
+            text-align: left;
+            padding: 40px 0;
+        }
+        .parallax-hero::before {
+            display: none;
+        }
+        .hero-media {
+            display: block;
+            position: relative;
+            overflow: visible;
+        }
+        .hero-image {
+            position: relative;
+            width: 100%;
+            height: auto;
+            top: auto;
+            left: auto;
+            transform: none;
+            opacity: 1;
+            pointer-events: auto;
+            display: none; /* Hide all by default */
+        }
+        .hero-image[src='image4.jpg'] {
+            display: block; /* Only show the main image */
+        }
+        .hero-overlay {
+            position: relative;
+            z-index: 1;
+            color: #0b2266; /* Dark text for light background */
+            text-align: center;
+            padding: 40px 24px;
+        }
+        .hero-overlay .hero-kicker,
+        .hero-overlay .hero-tagline {
+            color: #555;
+        }
+        .hero-title {
+            text-shadow: none;
+        }
+    </style>
     <script src="script.js"></script>
 </body>
 </html>
+
